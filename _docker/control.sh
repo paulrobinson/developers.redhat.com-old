@@ -14,7 +14,7 @@ Shortcuts to control Docker containers\n
 }
 
 OPTIND=1         # Reset in case getopts has been used previously in the shell.
-while getopts "h?br" opt; do
+while getopts "h?brs" opt; do
     case "$opt" in
     h|\?)
         show_help
