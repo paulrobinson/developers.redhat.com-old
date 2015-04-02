@@ -4,5 +4,5 @@ set -e
 
 cd _docker
 sudo ./control.sh -b
-sudo ./control.sh -s
+sudo ./control.sh -r
 
