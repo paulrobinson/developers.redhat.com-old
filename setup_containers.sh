@@ -12,20 +12,4 @@ if [ "$STATUS" != 0 ]; then
 	echo Error booting Containers
 	exit 1
 fi
-echo READY!
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-curl http://10.3.11.94:8081/
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-echo ""
-curl http://10.3.11.94:8080/v1/rest/project
+echo CONTAINERS READY!

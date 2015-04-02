@@ -11,18 +11,18 @@ vimeo_access_token: 1ad6583e71e183c3075a88d46ebb0675
 register_url: https://community.jboss.org/register.jspa
 change_frequency: daily
 searchisko_warnings: _site/searchisko_warnings.json
-application_name: JBoss Developer
+application_name: Red Hat Developer
 application_version: 1
 experiment_id: U10jDQ5OSNyz_vAuuUdggg
 
 deploy_base: &deploy
-  host: www@filemgmt.jboss.org
-  cdn_host: www@filemgmt.jboss.org
-  cdn_path: /static_htdocs/www
+  host: rhd@filemgmt.jboss.org
+  cdn_host: rhd@filemgmt.jboss.org
+  cdn_path: /static_htdocs/rhd
   uncommitted: true
 
 profile_base: &profile
-  cdn_http_base: &cdn_http_base //static.jboss.org/www 
+  cdn_http_base: &cdn_http_base //static.jboss.org/rhd 
   cdn_out_dir: &cdn_out_dir _tmp
   cdn_version: &cdn_version true
   log_faraday: true
@@ -44,14 +44,14 @@ profile_base: &profile
 
 profiles:
   development: &development
-    dcp_base_url: http://docker:8080/
-    dcp_base_protocol_relative_url: //docker:8080/
+    dcp_base_protocol_relative_url: //10.3.11.94:8080/
+    dcp_base_url: http://10.3.11.94:8080/
+    drupal_base_url: http://10.3.11.94:8081/
     log_faraday: true
-    push_to_searchisko: false
+    push_to_searchisko: true
     metrics: false
-    authenticate_google_books_api: false
+    authenticate_google_books_api: true
     build_threads: 0
-    drupal_base_url: http://docker:8081/
   
   development_cdn: 
     <<: *development
@@ -75,15 +75,15 @@ profiles:
     
   production:
     <<: *profile
-    base_url: http://www.jboss.org/
-    dcp_base_protocol_relative_url: //dcp.jboss.org/
-    dcp_base_url: http://dcp.jboss.org/
+    base_url: http://rhd.jboss.org/
+    dcp_base_protocol_relative_url: //10.3.11.94:8080/
+    dcp_base_url: http://10.3.11.94:8080/
+    drupal_base_url: http://10.3.11.94:8081/
     require_tag: true
-    metrics: true
-    elq_form_name: jboss-org-integration
+    metrics: false
     disqus: jdf
     robots:
       disallow: false
     deploy:
       <<: *deploy
-      path: /www_htdocs/www
+      path: /www_htdocs/rhd
