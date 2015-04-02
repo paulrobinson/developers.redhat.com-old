@@ -3,6 +3,6 @@
 set -e
 
 cd _docker
-sudo controls.sh -b
-sudo controls.sh -s
+sudo control.sh -b
+sudo control.sh -s
 
