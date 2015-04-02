@@ -8,6 +8,7 @@ function show_help() {
 Shortcuts to control Docker containers\n
     -b      Build the containers
     -r      Restart the containers
+    -s      Stop the containers
     -h / -? Show this help message
 "
 }
@@ -23,12 +24,16 @@ while getopts "h?br" opt; do
         ;;
     r)  restart=true
         ;;
+    s)  stop=true
+        ;;
     esac
 done
 
 shift $((OPTIND-1))
 
 if [ $build = true ]; then
+  docker build --tag developer.redhat.com/base ./base
+  docker build --tag developer.redhat.com/java ./java
   docker-compose build
 fi
 
@@ -37,3 +42,6 @@ if [ $restart = true ]; then
   docker-compose up -d
 fi
 
+if [ $stop = true ]; then
+  docker-compose kill
+fi
