@@ -2,6 +2,7 @@
 
 build=false
 restart=false
+stop=false
 
 function show_help() {
   echo "
