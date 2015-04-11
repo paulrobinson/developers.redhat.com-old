@@ -214,9 +214,11 @@ Awestruct::Extensions::Pipeline.new do
                                                        by: 'row')
   extension JBoss::Developer::HighValueInteractionDataPreparer.new
 
-  extension Aweplug::Extensions::DrupalExtension.new
+  # Don't continue until we know drupal is alive, this could be an after_pipeline extension
+  extension JBoss::Developer::DrupalStatuSChecker.new
 
   transformer JBoss::Developer::LinkTransformer.new
   transformer Aweplug::Transformer::AsciidocCdnTransformer.new
+  transformer JBoss::Developer::DrupalTransformer.new
 end
 

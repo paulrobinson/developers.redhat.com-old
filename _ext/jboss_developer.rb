@@ -1,7 +1,10 @@
 require 'uri'
+require 'socket'
+require 'timeout'
 require 'aweplug/helpers/cdn'
 require 'aweplug/helpers/resources'
 require 'aweplug/helpers/png'
+require 'aweplug/helpers/drupal_service'
 require 'compass'
 require 'asciidoctor'
 require 'asciidoctor/extensions'
@@ -71,6 +74,37 @@ module JBoss
           end
         end
         site.high_value_interactions = res
+      end
+    end
+
+    # Public. Checks to see if drupal is alive.
+    class DrupalStatuSChecker
+      def execute site
+        puts 'Waiting to proceed until Drupal is up'
+        up = false
+        until up == true
+          begin
+            Timeout::timeout(1) do
+              begin
+                s = TCPSocket.new('drupal', 80)
+                s.close
+                up = true
+              rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
+                # Doesn't matter, just means it's still down
+              end
+            end
+          rescue Timeout::Error
+            # We don't really care about this
+          end
+        end
+      end
+    end
+
+    class DrupalTransformer
+      def transform site, page, content
+        drupal = Aweplug::Helpers::DrupalService.default site
+        drupal.send_page page if page.output_extension.include? 'htm'
+        content # Don't mess up the content locally in _site
       end
     end
 
