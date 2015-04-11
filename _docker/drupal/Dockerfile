@@ -49,7 +49,7 @@ ADD Gemfile.lock ./
 RUN /bin/bash -l -c "bundle install"
 
 RUN pear channel-discover pear.drush.org && pear install drush/drush
-ADD awestruct_push-7.x-1.0-beta2.tar /var/www/html/sites/all/modules
+ADD awestruct_push-7.x-1.0-beta4.tar /var/www/html/sites/all/modules
 COPY httpd.conf /etc/httpd/conf/httpd.conf
 EXPOSE 80
 
