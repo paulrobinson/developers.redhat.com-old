@@ -1,7 +1,30 @@
+awestruct:
+  build: ./ruby
+  ports:
+    - "4242"
+  links:
+    - drupal
+    - searchisko
+  privileged: true
+  volumes:
+    - ../:/home/awestruct/developer.redhat.com
+  environment:
+    - google_api_key
+    - dcp_user
+    - dcp_password
+    - vimeo_client_secret
+    - vimeo_access_token_secret
+    - vimeo_access_token
+    - cache_password
+    - cache_url
+    - cache_user
+    - github_token
+    - drupal_user
+    - drupal_password
 drupal:
   build: ./drupal
   ports:
-    - "8081:80"
+    - "80"
   links:
     - drupalmysql
   volumes:
@@ -19,7 +42,7 @@ drupalmysql:
     - DB_USER=drupal
     - DB_PASSWORD=drupal
   ports:
-    - "13306:3306"
+    - "3306"
 mysql:
   build: ./mysql
   environment:
@@ -27,16 +50,16 @@ mysql:
     - DB_USER=searchisko
     - DB_PASSWORD=searchisko
   ports:
-    - "3306:3306"
+    - "3306"
 elasticsearch:
   build: ./elasticsearch
   ports:
-   - "9200:9200"
-   - "9300:9300"
+   - "9200"
+   - "9300"
 searchisko:
   build: ./searchisko
   ports:
-   - "8080:8080"
+   - "8080"
   environment:
     - DB_NAME=searchisko
     - DB_USER=searchisko
