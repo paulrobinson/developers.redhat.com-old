@@ -636,14 +636,14 @@ _images_design_stripes.png:
   build_no: 1
   md5sum: 2b85d0cb992aae95c1809d4f9e21fa82
 all.css:
-  build_no: 1
-  md5sum: 15348344e26316ba432e1992263b42c9
+  build_no: 4
+  md5sum: 07b360a8ae878afc26f1a51587274c2c
 buzz.js:
   build_no: 1
   md5sum: daf25b0135326fb6cfe1da519a167628
 forums.js:
-  build_no: 3
-  md5sum: d711f40902ae1879a89b0a8cad2e2a88
+  build_no: 11
+  md5sum: 64f39e68c64c481a547161ee15cdc1bc
 images_branding_buzzdefault_orange.png:
   build_no: 1
   md5sum: 7cb577c9c3808f0a580d2ef61ecf3f6e
@@ -672,8 +672,8 @@ images_branding_RHJB_Middleware_Logotype.png:
   build_no: 1
   md5sum: 1d695dac7bb803a00dfb8d5dd71ab914
 bottom.js:
-  build_no: 1
-  md5sum: 712c9c3820a082d940f7cb9eddcbc661
+  build_no: 3
+  md5sum: 7e0f2696bd83feb73ceef3c30fc34757
 images_design_iot_smartgrid.png:
   build_no: 1
   md5sum: bb82eb96fc9322b876c130c73749adaa
@@ -684,7 +684,7 @@ images_design_iot_faa.png:
   build_no: 1
   md5sum: 1e75d37a041407e8260875efa5861d95
 developer-materials-filter.js:
-  build_no: 6
+  build_no: 20
   md5sum: c83b8bad5764cf7447a35b0f34b49a06
 images_design_iot_marsrover.jpg:
   build_no: 1
@@ -866,3 +866,9 @@ images_design_research_tsb.png:
 developer-materials-bom.js:
   build_no: 1
   md5sum: c0728d38a1b900f4d55e5b91dc3b70fb
+images_branding_hero_mobile_480x500_devnation_03252015.jpg:
+  build_no: 1
+  md5sum: 7d62814d9f9b0fe74902a49642a33874
+images_branding_hero_desktop_1175x400_devnation_03252015.jpg:
+  build_no: 1
+  md5sum: 8ed4febcb615e7cfc0edee16cf2074f6

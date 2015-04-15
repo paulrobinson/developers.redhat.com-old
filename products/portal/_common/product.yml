@@ -7,7 +7,6 @@ youtube_album: http://www.youtube.com/playlist?list=PLcrLvMVKO0b2woVHNeCILbZ6WjD
 guides:
   Release_Notes:
   Administration_and_Configuration_Guide:
-  Development_Guide:
   Installation_Guide:
   Migration_Guide:
   User_Guide:
@@ -50,5 +49,5 @@ featured_items:
   - image_url: http://design.jboss.org/jbossdeveloper/sitedesign/jbossdeveloper_1_0/makerfiles/images/developermaterials_portal.png
     url: /video/vimeo/69888787
     text: Configure your portal for mobile devices
-
+evaluation: https://access.redhat.com/products/red-hat-jboss-portal/evaluation
 
