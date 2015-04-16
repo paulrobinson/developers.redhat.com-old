@@ -77,29 +77,6 @@ module JBoss
       end
     end
 
-    # Public. Checks to see if drupal is alive.
-    class DrupalStatuSChecker
-      def execute site
-        puts 'Waiting to proceed until Drupal is up'
-        up = false
-        until up == true
-          begin
-            Timeout::timeout(1) do
-              begin
-                s = TCPSocket.new('drupal', 80)
-                s.close
-                up = true
-              rescue Errno::ECONNREFUSED, Errno::EHOSTUNREACH
-                # Doesn't matter, just means it's still down
-              end
-            end
-          rescue Timeout::Error
-            # We don't really care about this
-          end
-        end
-      end
-    end
-
     class DrupalTransformer
       def transform site, page, content
         drupal = Aweplug::Helpers::DrupalService.default site
