@@ -77,20 +77,18 @@ def options_selected? options
   (options[:build] || options[:restart] || options[:awestruct][:gen] || options[:awestruct][:preview])
 end
 
-def startup_services
-  execute_docker_compose :up, %w(-d elasticsearch mysql drupalmysql drupal searchisko searchiskoconfigure)
-
-  configure_service = Docker::Container.get('docker_searchiskoconfigure_1')
-
-  while configure_service.info['State']['Running']
-    sleep 5
-    configure_service = Docker::Container.get('docker_searchiskoconfigure_1')
+def block_wait_drupal_started
+  docker_drupal = Docker::Container.get('docker_drupal_1')
+  until docker_drupal.info['NetworkSettings']['Ports']
+    sleep(5)
+    docker_drupal = Docker::Container.get('docker_drupal_1')
   end
 
   # Check to see if Drupal is accepting connections before continuing
   puts 'Waiting to proceed until Drupal is up'
-  drupal_ip = Docker::Container.get('docker_drupal_1').info["NetworkSettings"]["Ports"]["80/tcp"].first["HostIp"]
-  drupal_port = Docker::Container.get('docker_drupal_1').info["NetworkSettings"]["Ports"]["80/tcp"].first["HostPort"]
+  drupal_port80_info = docker_drupal.info["NetworkSettings"]["Ports"]["80/tcp"].first
+  drupal_ip = drupal_port80_info["HostIp"]
+  drupal_port = drupal_port80_info["HostPort"]
   up = false
   until up
     begin
@@ -108,8 +106,27 @@ def startup_services
       # We don't really care about this
     end
   end
+end
 
-  execute_docker_compose :up, %q(-d --no-recreate awestruct)
+def startup_services
+  execute_docker_compose :up, %w(-d elasticsearch mysql drupalmysql drupal searchisko searchiskoconfigure)
+
+  configure_service = Docker::Container.get('docker_searchiskoconfigure_1')
+
+  puts 'Waiting to proceed until Drupal is up and searchiskoconfigure has completed'
+  # searchiskoconfigure takes a while, we need to wait to proceed
+  while configure_service.info['State']['Running']
+    sleep 5
+    configure_service = Docker::Container.get('docker_searchiskoconfigure_1')
+  end
+
+  puts 'searchiskoconfigure done, waiting for drupal'
+
+  # Check to see if Drupal is accepting connections before continuing
+  block_wait_drupal_started
+
+  #execute_docker_compose :run, ['--no-deps', 'awestruct', 'rake clean preview[docker]']
+  execute_docker_compose :run, ['--no-deps', '--rm','--service-ports', 'awestruct', 'rake bundle_update clean gen[docker]']
 end
 
 options = Options.parse ARGV
@@ -145,9 +162,9 @@ if options[:restart]
 end
 
 if options[:awestruct][:gen]
-  execute_docker_compose :run, %w(--no-deps awestruct rake clean gen)
+  execute_docker_compose :run, ['--no-deps', 'awestruct', 'rake clean gen[docker]']
 end
 
 if options[:awestruct][:preview]
-  execute_docker_compose :run, %w(--no-deps awestruct rake clean preview)
+  execute_docker_compose :run, ['--no-deps', 'awestruct', 'rake clean preview[docker]']
 end

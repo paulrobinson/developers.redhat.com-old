@@ -78,9 +78,14 @@ module JBoss
     end
 
     class DrupalTransformer
+      def initialize(site)
+        @drupal = Aweplug::Helpers::DrupalService.default site
+      end
+
       def transform site, page, content
-        drupal = Aweplug::Helpers::DrupalService.default site
-        drupal.send_page page if page.output_extension.include? 'htm'
+        if site.drupal_base_url && page.output_extension.include?('htm')
+          @drupal.send_page page, content
+        end
         content # Don't mess up the content locally in _site
       end
     end

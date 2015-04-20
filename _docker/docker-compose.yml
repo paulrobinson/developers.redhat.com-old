@@ -28,8 +28,8 @@ drupal:
   links:
     - drupalmysql
   volumes:
-    - ../_drupal/themes:/var/www/html/sites/all/themes
-    - ../_drupal/scripts:/opt/drupal/bin
+    - ../_drupal/themes/:/var/www/html/sites/all/themes
+    - ../_drupal/scripts/:/drupal/bin
   environment:
     - DB_NAME=drupal
     - DB_USER=drupal
