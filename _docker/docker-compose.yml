@@ -1,5 +1,5 @@
 awestruct:
-  build: ./ruby
+  build: ./awestruct
   ports:
     - "4242"
   links:
@@ -68,7 +68,7 @@ searchisko:
    - mysql
    - elasticsearch
 searchiskoconfigure:
-  build: ./searchisko_configure
+  build: ./searchiskoconfigure
   links:
    - mysql
    - elasticsearch

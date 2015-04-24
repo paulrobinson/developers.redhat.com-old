@@ -1,6 +1,7 @@
 GIT
-  remote: git://github.com/awestruct/aweplug.git
-  revision: 28d88df2fca4f24074f089ce3f5255b63514864c
+  remote: git://github.com/LightGuard/aweplug.git
+  revision: a97ade926281483a8ae1d830526e1e3d0f3b05ee
+  branch: feature/drupal_add_path_to_upload
   specs:
     aweplug (1.0.0.a24)
       curb (~> 0.8.5)
@@ -19,7 +20,7 @@ GIT
 
 GIT
   remote: git://github.com/awestruct/awestruct.git
-  revision: 377c6f789a0a29ca3e7e81ffc19fa8ce093c386e
+  revision: 402581a14076ba8e8ba903d795ea5ca80857e8d6
   specs:
     awestruct (0.5.6.beta8)
       asciidoctor (~> 1.5, >= 1.5.2)
@@ -139,7 +140,7 @@ GEM
     http_parser.rb (0.6.0)
     i18n (0.7.0)
     image_size (1.4.1)
-    iso8601 (0.8.5)
+    iso8601 (0.8.6)
     json (1.8.2)
     jwt (1.4.1)
     kramdown (1.0.2)

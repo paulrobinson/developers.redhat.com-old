@@ -70,7 +70,7 @@ def execute_docker_compose(cmd, args = [])
 end
 
 def execute_docker(cmd, args = [])
-  Kernel.system *['sudo', cmd.to_s, *args]
+  Kernel.system *['docker', cmd.to_s, *args]
 end
 
 def options_selected? options
@@ -138,15 +138,15 @@ modify_env
 Docker.url = options[:docker] if options[:docker]
 
 if options[:build]
-  docker_dir = 'ruby'
+  docker_dir = 'awestruct'
 
   parent_gemfile = File.new '../Gemfile'
   parent_lock = File.new '../Gemfile.lock'
   docker_gemfile = File.new File.join(docker_dir, 'Gemfile')
   docker_lock = File.new File.join(docker_dir, 'Gemfile.lock')
 
-  FileUtils.cp parent_gemfile, 'ruby' unless Digest::MD5.file(parent_gemfile) == Digest::MD5.file(docker_gemfile)
-  FileUtils.cp parent_lock, 'ruby' unless Digest::MD5.file(parent_lock) == Digest::MD5.file(docker_lock)
+  FileUtils.cp parent_gemfile, docker_dir unless Digest::MD5.file(parent_gemfile) == Digest::MD5.file(docker_gemfile)
+  FileUtils.cp parent_lock, docker_dir unless Digest::MD5.file(parent_lock) == Digest::MD5.file(docker_lock)
 
   puts 'Building base docker image...'
   execute_docker(:build, ['-t developer.redhat.com/base', './base'])
