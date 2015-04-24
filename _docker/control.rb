@@ -18,8 +18,10 @@ class Options
       opts.banner = 'Usage: control.rb [options]'
       opts.separator 'Specific options:'
 
-      opts.on('-d', '--docker', 'Docker client connection info (i.e. tcp://example.com:1000)') do |d|
-        options[:docker] = d
+      opts.on('-d', '--dns', 'Override boot2docker DNS config to force use of Red Hat DNS servers') do |d|
+        Kernel.system('boot2docker', 'up')
+        Kernel.system('boot2docker', 'ssh', "echo $'EXTRA_ARGS=\"--dns=10.5.30.160 --dns=10.11.5.19 --dns=8.8.8.8\"' | sudo tee -a /var/lib/boot2docker/profile && sudo /etc/init.d/docker restart")
+        exit 0
       end
 
       opts.on('-r', '--restart', 'Restart the containers') do |r|
@@ -86,9 +88,9 @@ def block_wait_drupal_started
 
   # Check to see if Drupal is accepting connections before continuing
   puts 'Waiting to proceed until Drupal is up'
-  drupal_port80_info = docker_drupal.info["NetworkSettings"]["Ports"]["80/tcp"].first
-  drupal_ip = drupal_port80_info["HostIp"]
-  drupal_port = drupal_port80_info["HostPort"]
+  drupal_port80_info = docker_drupal.info['NetworkSettings']['Ports']['80/tcp'].first
+  drupal_ip = drupal_port80_info['HostIp']
+  drupal_port = drupal_port80_info['HostPort']
   up = false
   until up
     begin
