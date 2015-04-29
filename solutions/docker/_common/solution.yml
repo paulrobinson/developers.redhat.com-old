@@ -6,4 +6,5 @@ overview_links:
     url: https://github.com/jboss-dockerfiles
   - description: JBoss on Docker Hub
     url: https://registry.hub.docker.com/repos/jboss/
-
+buzz_tags: 
+  - Docker

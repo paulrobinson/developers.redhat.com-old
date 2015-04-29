@@ -8,3 +8,5 @@ overview_links:
     url: http://docs.jboss.org/unifiedpush/unifiedpush.pdf
   - description: Quickstarts
     url: https://github.com/jboss-developer/jboss-unifiedpush-quickstarts/archive/1.0.0.Beta1.zip
+buzz_tags: 
+  - Unified Push
