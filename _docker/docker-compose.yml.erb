@@ -1,7 +1,7 @@
 awestruct:
   build: ./awestruct
   ports:
-    - "4242"
+    - "<%= ENV['AWESTRUCT_HOST_PORT'] %>:4242"
   links:
     - drupal
     - searchisko
@@ -21,10 +21,12 @@ awestruct:
     - github_token
     - drupal_user
     - drupal_password
+    - AWESTRUCT_HOST_PORT
+    - SEARCHISKO_HOST_PORT
 drupal:
   build: ./drupal
   ports:
-    - "80"
+    - "<%= ENV['DRUPAL_HOST_PORT'] %>:80"
   links:
     - drupalmysql
   volumes:
@@ -42,7 +44,7 @@ drupalmysql:
     - DB_USER=drupal
     - DB_PASSWORD=drupal
   ports:
-    - "3306"
+    - "<%= ENV['DRUPALMYSQL_HOST_PORT'] %>:3306"
 mysql:
   build: ./mysql
   environment:
@@ -50,16 +52,16 @@ mysql:
     - DB_USER=searchisko
     - DB_PASSWORD=searchisko
   ports:
-    - "3306"
+    - "<%= ENV['MYSQL_HOST_PORT'] %>:3306"
 elasticsearch:
   build: ./elasticsearch
   ports:
-   - "9200"
-   - "9300"
+   - "<%= ENV['ES_HOST_PORT1'] %>:9200"
+   - "<%= ENV['ES_HOST_PORT2'] %>:9300"
 searchisko:
   build: ./searchisko
   ports:
-   - "8080"
+   - "<%= ENV['SEARCHISKO_HOST_PORT'] %>:8080"
   environment:
     - DB_NAME=searchisko
     - DB_USER=searchisko

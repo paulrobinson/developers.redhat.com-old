@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/LightGuard/aweplug.git
-  revision: a97ade926281483a8ae1d830526e1e3d0f3b05ee
+  revision: 01de11b65640115c939b13108e0b0cab1e051e2c
   branch: feature/drupal_add_path_to_upload
   specs:
     aweplug (1.0.0.a24)
@@ -20,7 +20,7 @@ GIT
 
 GIT
   remote: git://github.com/awestruct/awestruct.git
-  revision: 402581a14076ba8e8ba903d795ea5ca80857e8d6
+  revision: b8ad2ea56a38839b44659d47d56ef338e69d8a88
   specs:
     awestruct (0.5.6.beta8)
       asciidoctor (~> 1.5, >= 1.5.2)
@@ -35,7 +35,6 @@ GIT
       parallel (~> 1.1, > 1.1.1)
       rack (~> 1.5, >= 1.5.2)
       rest-client (~> 1.7, >= 1.7.2)
-      ruby-s3cmd (~> 0.1, >= 0.1.5)
       sass (~> 3.2)
       tilt (~> 2.0, >= 2.0.1)
 
@@ -202,7 +201,6 @@ GEM
     ruby-ll (2.1.1)
       ansi
       ast
-    ruby-s3cmd (0.1.5)
     sass (3.4.5)
     sawyer (0.6.0)
       addressable (~> 2.3.5)
