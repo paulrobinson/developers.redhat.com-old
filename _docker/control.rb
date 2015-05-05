@@ -5,7 +5,6 @@ require 'fileutils'
 require 'tempfile'
 require 'gpgme'
 require 'yaml'
-require 'digest'
 require 'docker'
 require 'socket'
 require 'timeout'
@@ -134,7 +133,6 @@ def block_wait_drupal_started
 
   # Add this to the ENV so we can pass it to the awestruct build
   ENV['DRUPAL_HOST_IP'] = drupal_ip
-  ENV['DRUPAL_HOST_PORT'] = drupal_port
 
   up = false
   until up do
@@ -143,7 +141,7 @@ def block_wait_drupal_started
 end
 
 def startup_services(opts)
-  if opts[:drupalj]
+  if opts[:drupal]
     execute_docker_compose :up, %w(-d elasticsearch mysql drupalmysql drupal searchisko searchiskoconfigure)
   else
     execute_docker_compose :up, %w(-d elasticsearch mysql searchisko searchiskoconfigure)
@@ -151,8 +149,10 @@ def startup_services(opts)
   configure_service = Docker::Container.get('docker_searchiskoconfigure_1')
 
   puts 'Waiting to proceed until searchiskoconfigure has completed'
+
   # searchiskoconfigure takes a while, we need to wait to proceed
   while configure_service.info['State']['Running']
+    # TODO We need to figure out if the container has actually died, if it died print an error and abort
     sleep 5
     configure_service = Docker::Container.get('docker_searchiskoconfigure_1')
   end
@@ -161,9 +161,9 @@ def startup_services(opts)
   block_wait_drupal_started if opts[:drupal]
 
   if opts[:drupal]
-    execute_docker_compose :run, ['--no-deps', '--rm','--service-ports', 'awestruct', 'rake --trace bundle_update clean preview[drupal]']
+    execute_docker_compose :run, ['--no-deps', '--rm','--service-ports', 'awestruct', 'rake bundle_update clean preview[drupal]']
   else
-    execute_docker_compose :run, ['--no-deps', '--rm','--service-ports', 'awestruct', 'rake --trace bundle_update clean preview[docker]']
+    execute_docker_compose :run, ['--no-deps', '--rm','--service-ports', 'awestruct', 'rake bundle_update clean preview[docker]']
   end
 end
 
@@ -184,11 +184,9 @@ if options[:build]
 
   parent_gemfile = File.new '../Gemfile'
   parent_lock = File.new '../Gemfile.lock'
-  docker_gemfile = File.new File.join(docker_dir, 'Gemfile')
-  docker_lock = File.new File.join(docker_dir, 'Gemfile.lock')
 
-  FileUtils.cp parent_gemfile, docker_dir unless Digest::MD5.file(parent_gemfile) == Digest::MD5.file(docker_gemfile)
-  FileUtils.cp parent_lock, docker_dir unless Digest::MD5.file(parent_lock) == Digest::MD5.file(docker_lock)
+  FileUtils.cp parent_gemfile, docker_dir
+  FileUtils.cp parent_lock, docker_dir
 
   puts 'Building base docker image...'
   execute_docker(:build, '--tag=developer.redhat.com/base', './base')
@@ -200,13 +198,12 @@ end
 if options[:restart]
   execute_docker_compose :kill
   startup_services(options)
-  execute_docker_compose :ps
 end
 
 if options[:awestruct][:gen]
-  execute_docker_compose :run, ['--no-deps', 'awestruct', 'rake clean gen[docker]']
+  execute_docker_compose :run, ['--no-deps', '--rm', 'awestruct', 'rake clean gen[docker]']
 end
 
 if options[:awestruct][:preview]
-  execute_docker_compose :run, ['--no-deps', 'awestruct', 'rake clean preview[docker]']
+  execute_docker_compose :run, ['--no-deps', '--rm', 'awestruct', 'rake clean preview[docker]']
 end

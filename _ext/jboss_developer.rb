@@ -1,6 +1,4 @@
 require 'uri'
-require 'socket'
-require 'timeout'
 require 'aweplug/helpers/cdn'
 require 'aweplug/helpers/resources'
 require 'aweplug/helpers/png'

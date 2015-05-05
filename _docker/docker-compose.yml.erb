@@ -34,6 +34,7 @@ drupal:
     - ../_drupal/scripts/:/drupal/bin
   environment:
     - DB_NAME=drupal
+    # TODO: We could probably take these out and move them to secrets.yml.gpg if they aren't there already
     - DB_USER=drupal
     - DB_PASSWORD=drupal
   privileged: true

@@ -53,6 +53,7 @@ RUN cd /tmp \
 
 RUN gem install bundler --no-rdoc --no-ri
 
+# Add the volume for the actual project
 VOLUME /home/awestruct/developer.redhat.com
 
 USER awestruct
@@ -67,11 +68,9 @@ WORKDIR /tmp
 ENV GEM_HOME /home/awestruct/gems
 RUN mkdir -p /home/awestruct/gems && bundle install
 
-# Add the volume for the actual project
 WORKDIR /home/awestruct/developer.redhat.com 
 
 EXPOSE 4242
 
-ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
 CMD [ "rake", "bundle_update clean gen[docker]"]
 
