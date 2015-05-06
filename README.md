@@ -9,7 +9,7 @@ Fork the project, then clone your fork and add the upstream repository.
          cd developer.redhat.com
          git remote add -f upstream git@github.com:redhat-developer/developer.redhat.com.git
 
-### Docker setup (Optional) WARNING: incomplete instructions, updates coming soon.
+### Docker setup (Optional, but preferred)
 This section describes how to build the site using local instances of Searchisko (running in Docker containers).
 This section is optional, but highly recommended as this gives you a production-like environment locally.
 Skip to the [Site Build Setup](#site_build_setup) section if you don't want to use Docker.
@@ -22,14 +22,13 @@ Skip to the [Site Build Setup](#site_build_setup) section if you don't want to u
 6. If you are running on Mac, and are not on an office network, you may hit DNS problems. If so, run `./control.rb -d` which will add the Red Hat DNS servers to your boot2docker install. This may cause issues if you use boot2docker and aren't on the Red Hat VPN. If you need to undo this, the easiest way is to get a fresh copy of the boot2docker VM image by running `boot2docker destroy && boot2docker init` (note that this will reset any other customisations you have made to the image). If you are unwilling to get a fresh copy of the boot2docker VM, then you will need to follow the steps below in _Edit your boot2docker DNS setup_ to remove the Red Hat DNS servers.
 7. Run the following commands to build the images and start the containers:
 
-        cd _docker
-        control.rb -br
+        ./control.rb -br
 
 This will take awhile the first time. On subsequent builds you do not need to pass the `-b` flag unless you need to rebuild the docker containers. The script will output some information when everything is ready to go and you'll see the familiar awestruct build as you near the end. The script runs awestruct in preview mode, so the script won't finish until you stop it with `CTRL+C`. At the start of the build the script will output the ports the services are listening on for access outside of docker. Typically you'll only need to worry about awestruct and searchisko ports. Those will be available on host `docker` and the corresponding port for that service.
 
 NOTE: When `preview` is run, you may see erorrs from guard/listen about a folder being watched already, as far I as I can tell this is harmless and you can ignore those.
     
-### <a name="site_build_setup"></a> Site Build Setup
+### <a name="site_build_setup"></a> Site Build without Docker
 
 1. Configure environment variables needed for the site.
     * Request the following values from the JBoss Developer team:
@@ -112,7 +111,7 @@ New pages should be added to the root with the extension `.html.slim`
 
 ### Updating the DCP
 
-Updates to the DCP should happen automatically if the build is being done on the build server, however, if
+Updates to the DCP should happen automatically if the build is being done on the build server or if you are using docker, however, if
 it is down or there is another emergency situation and the site needs to be built and content pushed to the
 DCP for staging or production please contact Pete Muir, Jason Porter, Andrew Rubinger or Ray Ploski. Below
 are steps to setup the environment for pushing content to the DCP.

@@ -72,5 +72,6 @@ WORKDIR /home/awestruct/developer.redhat.com
 
 EXPOSE 4242
 
+ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
 CMD [ "rake", "bundle_update clean gen[docker]"]
 

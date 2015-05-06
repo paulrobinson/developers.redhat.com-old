@@ -19,8 +19,8 @@ GIT
       xml-simple (~> 1.1)
 
 GIT
-  remote: git://github.com/awestruct/awestruct.git
-  revision: 21e72172b6136341a67f2e432d3073550d3730a5
+  remote: git://github.com/LightGuard/awestruct.git
+  revision: 77ddc4098d780c803d2e350d8764e1a646eeb450
   specs:
     awestruct (0.5.6.beta9)
       asciidoctor (~> 1.5, >= 1.5.2)
