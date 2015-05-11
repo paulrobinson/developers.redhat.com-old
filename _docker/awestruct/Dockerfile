@@ -56,15 +56,17 @@ RUN gem install bundler --no-rdoc --no-ri
 # Add the volume for the actual project
 VOLUME /home/awestruct/developer.redhat.com
 
-USER awestruct
 
 ## Build setup
 # Build the current gemset (user will only need to build the difference
 COPY Gemfile /tmp/Gemfile
 COPY Gemfile.lock /tmp/Gemfile.lock
 COPY gemrc /home/awestruct/.gemrc
-WORKDIR /tmp
+RUN chown awestruct /tmp/Gemfile /tmp/Gemfile.lock /home/awestruct/.gemrc
 
+USER awestruct
+
+WORKDIR /tmp
 ENV GEM_HOME /home/awestruct/gems
 RUN mkdir -p /home/awestruct/gems && bundle install
 
