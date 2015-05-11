@@ -43,8 +43,8 @@ RUN yum -y install  \
 WORKDIR /var/www/html
 
 # Install Ruby and bundler
-ADD http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.2.tar.gz /tmp/
-RUN cd /tmp \
+RUN curl http://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.2.tar.gz > /tmp/ruby-2.1.2.tar.gz \
+    && cd /tmp \
     && tar -xzf /tmp/ruby-2.1.2.tar.gz \
     && cd ruby-2.1.2/ \
     && ./configure --disable-install-doc \
@@ -52,8 +52,8 @@ RUN cd /tmp \
     && make install \
     && rm -rf /tmp/*
 
-ADD http://production.cf.rubygems.org/rubygems/rubygems-2.4.1.tgz /tmp/
-RUN cd /tmp \
+RUN curl http://production.cf.rubygems.org/rubygems/rubygems-2.4.1.tgz > /tmp/rubygems-2.4.1.tgz \
+    && cd /tmp \
     && tar -zxf /tmp/rubygems-2.4.1.tgz \
     && cd /tmp/rubygems-2.4.1 \
     && ruby setup.rb \
